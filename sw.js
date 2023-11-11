@@ -70,50 +70,47 @@ const Cache_Name = 'v1_cache',
     './assets/logo/logo.png'
   ]
 
-  self.addEventListener('install',e=>
-    e.waitUntil
-    (
-        caches.open(Cache_Name)
-        .then(cache=>{
-            return cache.addAll(urlsToCache)
+//Instala el service worker 
+self.addEventListener('install', e=> {
+    e.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(cache => {
+            return cache.addAll(urlIsToCache)
             .then(() => {
-                self.skipWaiting();
+                self.skipWaiting()
             })
 
-            .catch(err =>
-                {
-                    console.log('No se registro el cache',err);
-                })
+            .catch(err => {
+                console.log('No se registro el cache', err);
+            })
         })
     )
-);
+})
 
 self.addEventListener('activate', e=>{
-    const cacheWitelist=[Cache_Name];
+    const cacheWhiteList = [CACHE_NAME]
     e.waitUntil(
         caches.keys()
-        .then(CacheName =>
-            {
-                return Promise.all(
-                    CacheName.map(CacheName =>
-                        {
-                            if(cacheWhitelist.indezof(cacheName)=== -1)
-                            {
-                                return caches.delete(cacheName);
-                            }
-                        })
-                );
-            })
-            .then(()=>{self.clients.Claim();})
-    ); 
-});
+        .then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName =>{
+                    if(cacheWhiteList.indexOf(cacheName) === -1){
+                        //Borrar elementos que no se necesitan
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+        .then(() => {self.clients.claim();})
+    );
+})
 
-self.addEventListener('fetch', e=>{
+self.addEventListener
+('fetch', e =>{
     e.respondWith(
         caches.match(e.request)
         .then(res=>{
-            if(res)
-            {
+            if(res){
                 return res;
             }
             return fetch(e.request);
