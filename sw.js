@@ -1,4 +1,4 @@
-const Cache_Name = 'v1_cache',
+const CACHE_NAME = 'v1_cache',
   urlsToCache = [
     './',
     './assets/css/animate.css',
