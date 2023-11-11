@@ -70,8 +70,7 @@ const Cache_Name = 'v1_cache',
     './assets/logo/logo.png'
   ]
 
-  self.addEventListener
-('install',e=>
+  self.addEventListener('install',e=>
     e.waitUntil
     (
         caches.open(Cache_Name)
@@ -117,7 +116,7 @@ self.addEventListener('fetch', e=>{
             {
                 return res;
             }
-            return fetch(r.request);
+            return fetch(e.request);
         })
     );
 });
