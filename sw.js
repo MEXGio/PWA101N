@@ -1,4 +1,4 @@
-const CACHENAME = 'v1_cache',
+const Cache_Name = 'v1_cache',
   urlsToCache = [
     './',
     './assets/css/animate.css',
@@ -71,53 +71,53 @@ const CACHENAME = 'v1_cache',
   ]
 
   self.addEventListener
-  ('install',e=>
-      e.waitUntill0
-      (
-          caches.open(CACHENAME)
-          .then(cache=>{
-              return cache.addAll(urlsToCache)
-              .then(() => {
-                  self.skipWaiting();
-              })
-  
-              .catch(err =>
-                  {
-                      console.log('No se registro el cache',err);
-                  })
-          })
-      )
-  );
-  
-  self.addEventListener('activate', e=>{
-      const cacheWitelist=[CACHENAME];
-      e.waitUntill0(
-          caches.keys()
-          .then(CacheName =>
-              {
-                  return Promise.all(
-                      CacheName.map(CacheName =>
-                          {
-                              if(cacheWhitelist.indezof(cacheName)=== -1)
-                              {
-                                  return caches.delete(cacheName);
-                              }
-                          })
-                  );
-              })
-              .then(()=>{self.clients.Claim();})
-      ); 
-  });
-  
-  self.addEventListener('fetch', e=>{
-      e.respondWith(
-          caches.match(e.request)
-          .then(res=>{
-              if(res)
-              {
-                  return res;
-              }
-              return fetch(e.request);
-          })
-      );
-  });
+('install',e=>
+    e.waitUntil
+    (
+        caches.open(Cache_Name)
+        .then(cache=>{
+            return cache.addAll(urlsToCache)
+            .then(() => {
+                self.skipWaiting();
+            })
+
+            .catch(err =>
+                {
+                    console.log('No se registro el cache',err);
+                })
+        })
+    )
+);
+
+self.addEventListener('activate', e=>{
+    const cacheWitelist=[Cache_Name];
+    e.waitUntil(
+        caches.keys()
+        .then(CacheName =>
+            {
+                return Promise.all(
+                    CacheName.map(CacheName =>
+                        {
+                            if(cacheWhitelist.indezof(cacheName)=== -1)
+                            {
+                                return caches.delete(cacheName);
+                            }
+                        })
+                );
+            })
+            .then(()=>{self.clients.Claim();})
+    ); 
+});
+
+self.addEventListener('fetch', e=>{
+    e.respondWith(
+        caches.match(e.request)
+        .then(res=>{
+            if(res)
+            {
+                return res;
+            }
+            return fetch(r.request);
+        })
+    );
+});
